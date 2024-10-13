@@ -1,30 +1,35 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import ChartTest from './components/ChartTest.vue'
+import {ref} from "vue";
+
+// TODO: how does ref() WORK ??!!!?!?!?!?!?!
+const chartData = ref({
+  datasets: [{
+    data: [
+      {x: '2016-12-25', y: 20, comment: 'test'},
+      {x: '2016-12-26', y: 10}
+    ]
+  }]
+})
+
+
+function handleClick(e){
+  console.log(e)
+}
+
+function handleBtn(){
+  const tempArr = {...chartData.value}
+  tempArr.datasets[0].data.push({x: '2016-12-25', y: 20, comment: 'test'})
+  chartData.value = tempArr
+}
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+  <!--  TODO: IDE linting-->
+  <ChartTest @click="handleClick" :datasets="chartData"/>
+  <button @click="handleBtn">Test me bitch</button>
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
+
 </style>
