@@ -46,12 +46,11 @@ function handleBtn(){
   <!--  TODO: IDE linting-->
   <div class="container">
     <VSidebar/>
-    <div class="content">
-      <ChartTest @click="handleClick" :datasets="chartData"/>
-      <button @click="handleBtn">Test me bitch</button>
-      <div>{{chartData}}</div>
-    </div>
-    <main>
+<!--    <div class="content">-->
+<!--      <ChartTest @click="handleClick" :datasets="chartData"/>-->
+<!--      <button @click="handleBtn">Test me bitch</button>-->
+<!--    </div>-->
+    <main class="content">
       <RouterView />
     </main>
   </div>
@@ -61,12 +60,12 @@ function handleBtn(){
   .container {
     display: flex;
     height: 100%;
-  }
-
-  .content {
-    display: flex;
-    flex-direction: column;
-    flex-basis: 70vw;
+    max-width: 1280px;
+    min-width: 1280px;
+    max-height: 800px;
     margin: 0 auto;
+    align-self: center;
+    border: 1px solid grey;
+    border-radius: 8px;
   }
 </style>

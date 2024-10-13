@@ -1,14 +1,24 @@
 <script setup lang="ts">
-
 import VSidebarItem from "./VSidebarItem.vue";
+defineProps({
+  data: Array
+})
+
+function titleToUrl(title){
+  return title.split(" ").join('-').toLowerCase()
+}
 </script>
 
 <template>
   <div class="chart-list">
     <ul class="chart-list__list">
-      <VSidebarItem class="chart-list__item" title="qwerty" />
-      <VSidebarItem class="chart-list__item" title="qwerty"/>
-      <VSidebarItem class="chart-list__item" title="qwerty"/>
+      <VSidebarItem
+          class="chart-list__item"
+          v-for="(item, i) in data"
+          :title="item.title"
+          :to="titleToUrl(item.title)"
+          :key="item.title + i"
+      />
     </ul>
     <button class="chart-list__btn">New chart</button>
   </div>
@@ -26,7 +36,6 @@ import VSidebarItem from "./VSidebarItem.vue";
       display: flex;
       flex-direction: column;
       width: 100%;
-      padding: 20px 40px;
     }
   }
 </style>

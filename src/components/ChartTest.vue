@@ -6,7 +6,7 @@ ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
 import {ref, useTemplateRef, computed } from 'vue'
 const emit = defineEmits(['click']) // todo: typing
-const props = defineProps(['datasets', 'testData']) // todo: validation
+const props = defineProps(['datasets']) // todo: validation
 
 const chartRef = useTemplateRef('chart')
 // const chartData = props.datasets
