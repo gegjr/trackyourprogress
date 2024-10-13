@@ -11,7 +11,6 @@ const props = defineProps(['datasets', 'testData']) // todo: validation
 const chartRef = useTemplateRef('chart')
 // const chartData = props.datasets
 const chartData = computed(() => {return props.datasets})
-const testData = props.testData
 
 const chartOptions = {
   responsive: true,
