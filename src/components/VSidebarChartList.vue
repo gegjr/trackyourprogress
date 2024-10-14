@@ -16,8 +16,9 @@ function titleToUrl(title){
           class="chart-list__item"
           v-for="(item, i) in data"
           :title="item.title"
-          :to="titleToUrl(item.title)"
-          :key="item.title + i"
+          :type="item.type"
+          :to="titleToUrl(item.url)"
+          :key="item.url + i"
       />
     </ul>
   </div>

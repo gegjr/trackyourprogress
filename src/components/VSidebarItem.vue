@@ -1,7 +1,8 @@
 <script setup lang="ts">
 defineProps({
   title: String,
-  to: String
+  to: String,
+  type: String
 })
 
 </script>
@@ -9,7 +10,7 @@ defineProps({
 <template>
   <li class="chart-list-item">
     <RouterLink :to="to" class="chart-list-item__link">
-      <i class="chart-list-item__icon">I</i>
+      <i class="chart-list-item__icon">({{ type }})</i>
       <h3 class="chart-list-item__title">{{ title }}</h3>
     </RouterLink>
   </li>

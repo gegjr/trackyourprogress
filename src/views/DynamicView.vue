@@ -10,25 +10,32 @@ import VScatterChart from "@/components/VScatterChart.vue";
 
 const route = useRoute()
 const store = useUserData()
-const userData = store.userData
+const { getChartByUrl } = store
 
 const url = computed(() => { return route.params.url })
 // TODO: why computed need .value?
-const urlDataObj = computed(() => { return userData.charts[url.value]})
+// const urlDataObj = computed(() => { return userData.charts[url.value]})
+const urlDataObj = computed(() => getChartByUrl(url.value))
+console.log('urlDataObj', urlDataObj)
+console.log('urlDataObj.value.type', urlDataObj.type)
 const urlDataComponent = {
-  'bar-chart': VBarChart,
-  'points-chart': VPointChart,
-  'radar-chart': VScatterChart
+  'bar': VBarChart,
+  'point': VPointChart,
+  'radar': VScatterChart
 }
 const currentComponent = computed(() => { return urlDataComponent[urlDataObj.value.type]})
+const chartData = computed(() => urlDataObj.value.data)
 </script>
 
 <template>
   <h6>{{ urlDataObj }}</h6>
-  <h6>{{ urlDataObj.data }}</h6>
+  <p>-----------</p>
+  <h6>{{ currentComponent }}</h6>
+  <p>-----------</p>
+  <h6>chartData: {{ chartData }}</h6>
   <component
       :is="currentComponent"
-      :data="urlDataObj.data"
+      :data="chartData"
   ></component>
 </template>
 

@@ -46,10 +46,6 @@ function handleBtn(){
   <!--  TODO: IDE linting-->
   <div class="container">
     <VSidebar/>
-<!--    <div class="content">-->
-<!--      <ChartTest @click="handleClick" :datasets="chartData"/>-->
-<!--      <button @click="handleBtn">Test me bitch</button>-->
-<!--    </div>-->
     <main class="content">
       <RouterView />
     </main>
@@ -67,5 +63,12 @@ function handleBtn(){
     align-self: center;
     border: 1px solid grey;
     border-radius: 8px;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 40px;
   }
 </style>

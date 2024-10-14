@@ -1,29 +1,24 @@
 <script setup lang="ts">
 import VSidebarChartList from "./VSidebarChartList.vue";
-import {useUserData} from "@/stores/useUserData.ts";
-const store = useUserData()
+import { useRouter } from 'vue-router'
+import { useUserData } from "@/stores/useUserData.ts";
+import { storeToRefs } from "pinia";
 
-const chartListData = [
-  {
-    title: 'Bar chart'
-  },
-  {
-    title: 'Points chart'
-  },
-  {
-    title: 'Radar chart'
-  },
-]
+const router = useRouter()
+const store = useUserData()
+const { getChartTitles } = storeToRefs(store)
 
 function addNewChart(){
-  console.log(store.getChartTitles)
+  router.push({
+    name: 'add-new'
+  })
 }
 </script>
 
 <template>
   <aside class="sidebar">
     <VSidebarChartList
-      :data="chartListData"
+      :data="getChartTitles"
     />
     <VButton class="sidebar__btn" @click="addNewChart">Add new chart</VButton>
   </aside>

@@ -6,11 +6,10 @@ ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
 import {ref, useTemplateRef, computed } from 'vue'
 const emit = defineEmits(['click']) // todo: typing
-const props = defineProps(['datasets']) // todo: validation
+const props = defineProps(['data']) // todo: validation
 
 const chartRef = useTemplateRef('chart')
-// const chartData = props.datasets
-const chartData = computed(() => {return props.datasets})
+const chartData = props.data
 
 const chartOptions = {
   responsive: true,
@@ -34,7 +33,6 @@ function handleChartClick(e) {
 
 <template>
   <div class="chart-wrapper">
-    <h1>here</h1>
     <Bar
         id="my-chart-id"
         :options="chartOptions"
