@@ -20,7 +20,6 @@ function titleToUrl(title){
           :key="item.title + i"
       />
     </ul>
-    <button class="chart-list__btn">New chart</button>
   </div>
 
 </template>

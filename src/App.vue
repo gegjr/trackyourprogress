@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ChartTest from './components/ChartTest.vue'
+import ChartTest from './components/VBarChart.vue'
 import VSidebar from "./components/VSidebar.vue";
 
 import {reactive, ref} from "vue";
