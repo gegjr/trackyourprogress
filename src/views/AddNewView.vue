@@ -6,23 +6,28 @@ const store = useUserData()
 const { addUserData } = store
 
 const title = ref('')
-const type = ref('')
+const type = ref('bar')
 const description = ref('')
 const url = computed(() => {
   return (title.value.split(" ").join("-") + "-" + type.value).toLowerCase()
 })
+// TODO: уникальный айди или url?
+const id = computed(() => {
+  return url.value
+})
 // TODO: ТИПЫ!!!!!
 const data = {
-  labels: [ 'January', 'February', 'March' ],
-  datasets: [ { data: [40, 20, 12] } ]
+  labels: [ '1', '2', '3', '4', '2', '6' ],
+  datasets: [ { data: [40, 20, 12, 0, 0, 0] } ]
 }
 function addNewChart(){
   addUserData({
-    title,
-    type,
-    description,
-    url,
-    data
+    title: title.value,
+    type: type.value,
+    description: description.value,
+    url: url.value,
+    data: data,
+    id: id.value
   })
 }
 </script>

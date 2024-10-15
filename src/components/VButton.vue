@@ -16,7 +16,7 @@ function handleClick() {
     outline: 1px solid grey;
     padding: 0.6em 1.2em;
     font-size: 1em;
-    font-weight: 500;
+    font-weight: 400;
     font-family: inherit;
     background-color: #f9f9f9;
     cursor: pointer;

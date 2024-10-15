@@ -70,5 +70,25 @@ function handleBtn(){
     flex-direction: column;
     width: 100%;
     padding: 40px;
+    position: relative;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+      width: 5px;
+      display: none;
+    }
+
+    &::-webkit-scrollbar-track {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      background-color: #f3f3f3;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 8px;
+      width: 5px;
+      background-color: lightgray;
+    }
   }
 </style>
