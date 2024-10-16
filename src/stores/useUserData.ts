@@ -2,9 +2,12 @@ import {defineStore} from 'pinia'
 import {computed, ref} from "vue";
 // TODO: WHF is the composables
 import { useStorage } from '@vueuse/core'
+import { useRoute } from 'vue-router'
 
 
 export const useUserData = defineStore('userData', () => {
+    const route = useRoute()
+
     // TODO: я не вижу как выглядит этот объект!!!
     const userData = ref({
         charts: useStorage('charts', [])
@@ -24,6 +27,9 @@ export const useUserData = defineStore('userData', () => {
     })
 
 
+    const currentChartObj = computed(() => {
+        return userData.value.charts.find(x => x.url === route.params.url)
+    })
     function getChartByUrl(url) {
         return userData.value.charts.find(x => x.url === url)
     }
@@ -42,6 +48,17 @@ export const useUserData = defineStore('userData', () => {
         // yes, this is harsh (push === infinite loop inside chart object inner data watcher)
         for (let i = 0; i < chartObj.data.datasets.length; i++) {
             chartObj.data.datasets[i].data[chartObj.data.labels.length - 1] = obj.data
+        }
+    }
+    function addEmptyBarDatasetsItem(){
+        if(currentChartObj.value){
+            const emptyObj = {
+                label: "Name",
+                backgroundColor: "#333333",
+                data: new Array(currentChartObj.value.data.datasets[0].data.length)
+            }
+
+            currentChartObj.value.data.datasets.push(emptyObj)
         }
     }
 
@@ -80,6 +97,8 @@ export const useUserData = defineStore('userData', () => {
     return {
         userData,
         getChartTitles,
+        currentChartObj,
+        addEmptyBarDatasetsItem,
         getChartByUrl,
         addUserData,
         deleteChartById,

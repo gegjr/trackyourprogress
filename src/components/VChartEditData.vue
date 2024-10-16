@@ -2,7 +2,7 @@
 import { useUserData } from "@/stores/useUserData.ts";
 import { useRoute } from "vue-router";
 
-const { getEditableChartData, getChartByUrl } = useUserData()
+const { getChartByUrl } = useUserData()
 const emit = defineEmits(['add-new-bar', 'delete-data', 'add-data'])
 
 // TODO: получать объект из стора

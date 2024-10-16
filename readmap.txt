@@ -1,9 +1,11 @@
 Roadmap:
-* add and edit legend for bar chart
-* grouped bars
-* interface for adding one new item
-* ability to change bars colors
-* data zoom
+* add and edit legend for bar chart (2/10)
+* grouped bars (solved -> ?)
+* interface for adding one new item (8/10)
+* ability to change bars colors (solved!)
+* data zoom (5/10)
+* point( and some other) chart (7/10)
+* deploy + mobile testing (8/10)
 
 ** корелляционные зависимости между графиками
 
