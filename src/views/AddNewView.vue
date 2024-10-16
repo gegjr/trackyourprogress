@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import {computed, ref} from "vue";
 import { useUserData } from "@/stores/useUserData.ts";
+import {useRouter} from "vue-router";
 
 const store = useUserData()
 const { addUserData } = store
+const router = useRouter()
 
 const title = ref('')
 const type = ref('bar')
@@ -17,8 +19,19 @@ const id = computed(() => {
 })
 // TODO: ТИПЫ!!!!!
 const data = {
-  labels: [ '1', '2', '3', '4', '2', '6' ],
-  datasets: [ { data: [40, 20, 12, 0, 0, 0] } ]
+  labels: [ '1!', '2', '3' ],
+  datasets: [
+    {
+      label: "Label 1",
+      backgroundColor: "#333333",
+      data: [3, 7, 4]
+    },
+    {
+      label: "Label 2",
+      backgroundColor: "#9a9a9a",
+      data: [4, 2, 6]
+    }
+  ]
 }
 function addNewChart(){
   addUserData({
@@ -29,6 +42,7 @@ function addNewChart(){
     data: data,
     id: id.value
   })
+  router.push({ path:`/${url.value}`})
 }
 </script>
 

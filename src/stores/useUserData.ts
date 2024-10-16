@@ -40,20 +40,30 @@ export const useUserData = defineStore('userData', () => {
         const chartObj = getChartById(id)
         chartObj.data.labels.push(obj.label)
         // yes, this is harsh (push === infinite loop inside chart object inner data watcher)
-        // TODO: создать репрезентацию и проверить отдельно (текущее удаление === перевод datasets.data в null => нельзя опираться на его длину)
-        chartObj.data.datasets[0].data[chartObj.data.labels.length] = obj.data
+        for (let i = 0; i < chartObj.data.datasets.length; i++) {
+            chartObj.data.datasets[i].data[chartObj.data.labels.length - 1] = obj.data
+        }
     }
 
     function deleteChartData(id, index) {
         const chartObj = getChartById(id)
-        delete chartObj.data.labels.splice(index, 1)
-        // yes, this is harsh (push === infinite loop inside chart object inner data watcher)
-        delete chartObj.data.datasets[0].data[index]
+        chartObj.data.labels.splice(index, 1)
+        for (let i = 0; i < chartObj.data.datasets.length; i++) {
+            chartObj.data.datasets[i].data.splice(index, 1)
+        }
+    }
+
+    function addNewBar(id, index){
+        const chartObj = getChartById(id)
+        chartObj.data.datasets.push({
+            backgroundColor: "lightgrey",
+            data: new Array(chartObj.data.datasets[0].data.length),
+            label: 'label 3'
+        })
     }
 
     function deleteChartById(id){
         const index =  userData.value.charts.findIndex(x => x.id === id)
-        // TODO: slice and splice sukaa
         userData.value.charts.splice(index, 1)
     }
 
@@ -61,7 +71,7 @@ export const useUserData = defineStore('userData', () => {
         const chartObj = getChartById(id)
         const result = {
             labels: chartObj.data.labels,
-            data: chartObj.data.datasets[0].data,
+            datasets: chartObj.data.datasets,
         }
 
         return result
@@ -75,6 +85,7 @@ export const useUserData = defineStore('userData', () => {
         deleteChartById,
         getEditableChartData,
         addChartData,
-        deleteChartData
+        deleteChartData,
+        addNewBar
     }
 })

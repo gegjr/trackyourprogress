@@ -1,21 +1,43 @@
 <script setup lang="ts">
-import {computed, ref} from "vue";
+import { Bar } from 'vue-chartjs'
+import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
+import {computed, useTemplateRef} from "vue";
+import {useTestStore} from "@/stores/useTestStore.ts";
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
-const innerRef = ref(['innerRef'])
-const testRef = ref(['xxx', innerRef.value])
-const testComputed = computed(() => testRef.value)
+const store = useTestStore()
+const { userData, deleteDataFromChart } = store
+console.log('userData:',userData )
+
+const chartRef = useTemplateRef('chart')
+const chartData = computed(() => JSON.parse(JSON.stringify(userData.charts[0].data)))
+
+
+const chartOptions = {
+  plugins: {
+    legend: {
+      display: true,
+      labels: {
+        color: 'rgb(255, 99, 132)'
+      },
+    }
+  },
+  responsive: true,
+}
 function handleTest(){
-  console.log('test ^_^')
-  testRef.value.push('test')
-  innerRef.value.push('test')
+  deleteDataFromChart(0)
 }
 </script>
 
 <template>
   <h1>testing area</h1>
   <VButton @click="handleTest">Test</VButton>
-  <p>{{ testRef }}</p>
-  <p>{{ testComputed }}</p>
+  <Bar
+      :options="chartOptions"
+      :data="chartData"
+      ref="chart"
+      class="bar-chart"
+  />
 </template>
 
 <style scoped lang="scss">

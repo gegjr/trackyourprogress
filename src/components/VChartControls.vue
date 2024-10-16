@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useUserData } from '@/stores/useUserData'
+import { useAppSettings } from "@/stores/useAppSettings.ts";
 import { useRouter } from "vue-router";
 
 const emit = defineEmits(['deleteChart'])
@@ -8,21 +9,23 @@ const props = defineProps({
 })
 
 const store = useUserData()
-// TODO: менять строчки местами сочетанием клавиш
+const { toggleEdit } = useAppSettings()
 const router = useRouter()
 const { deleteChartById } = store
 function handleDelete(){
-  console.log(props.id)
-  deleteChartById(props.id)
+  // TODO: что тут происходит и почему???
   router.push({name: 'home'})
+  deleteChartById(props.id)
 }
 
+function handleEdit(){
+  toggleEdit()
+}
 </script>
 
 <template>
   <div class="chart-controls">
-    <VButton class="chart-controls__edit">Edit</VButton>
-    <!--    TODO: error afted deletion-->
+    <VButton class="chart-controls__edit" @click="handleEdit">Edit</VButton>
     <VButton class="chart-controls__delete" @click="handleDelete">Delete</VButton>
   </div>
 </template>

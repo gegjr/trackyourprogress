@@ -1,45 +1,10 @@
 <script setup lang="ts">
-import ChartTest from './components/VBarChart.vue'
 import VSidebar from "./components/VSidebar.vue";
-
-import {reactive, ref} from "vue";
-
+import {computed, reactive, ref} from "vue";
 
 // TODO: how does ref() WORK ??!!!?!?!?!?!?!
-// ref and reactive =?????
-const refData = ref([
-  {x: '2016-12-25', y: 20, comment: 'test'},
-  {x: '2016-12-26', y: 10}
-])
-const chartData = ref({
-  datasets: [{
-    data: refData
-  }]
-})
 
 
-function handleClick(e){
-  console.log(e)
-}
-
-function handleBtn(){
-  // chartData.value.datasets[0].data.push({x: '2016-12-27', y: 20, comment: 'test1'})
-  const newData = [
-    {x: '2016-12-25', y: 25, comment: 'test'},
-    {x: '2016-12-26', y: 11},
-    {x: '2016-12-27', y: 11}
-  ]
-
-  chartData.value = {
-    datasets: [{
-      data: newData
-    }]
-  }
-
-  refData.value = [
-    {x: '2016-12-26', y: 10}
-  ]
-}
 </script>
 
 <template>
@@ -56,8 +21,9 @@ function handleBtn(){
   .container {
     display: flex;
     height: 100%;
+    min-width: 600px;
     max-width: 1280px;
-    min-width: 1280px;
+    width: 100%;
     max-height: 800px;
     margin: 0 auto;
     align-self: center;

@@ -1,23 +1,36 @@
 <script setup lang="ts">
 import VChartControls from "@/components/VChartControls.vue";
 
-import {watch, useTemplateRef, computed } from 'vue'
+import {watch, useTemplateRef, computed, shallowRef} from 'vue'
+import { useAppSettings } from "@/stores/useAppSettings.ts";
 import { Bar } from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
-
 const emit = defineEmits(['click']) // todo: typing
 const props = defineProps(['data', 'id']) // todo: validation
 
+const { settings } = useAppSettings()
+const isEditing = computed(() => settings.isEditState)
 const chartRef = useTemplateRef('chart')
-const chartData = props.data
+// const chartData = computed(() => props.data)
+const chartData = computed(() => JSON.parse(JSON.stringify(props.data)))
+
 watch(chartData, () => {
   chartRef.value.chart.update();
 })
 
+
 const chartOptions = {
+  plugins: {
+    legend: {
+      display: true,
+      labels: {
+        color: 'rgb(255, 99, 132)'
+      },
+    }
+  },
   responsive: true,
   onClick: (e) => {
     handleChartClick(e)
@@ -38,25 +51,35 @@ function handleChartClick(e) {
 </script>
 
 <template>
-  <div class="chart-wrapper">
-    <Bar
-        id="my-chart-id"
-        :options="chartOptions"
-        :data="chartData"
-        ref="chart"
-        class="bar-chart"
-    />
-    <VChartControls
-        class="chart-controls"
-        :id="id"
-    />
+  <div>
+    <div class="chart-wrapper" :class="{'is-editing': isEditing}">
+      <Bar
+          id="my-chart-id"
+          :options="chartOptions"
+          :data="chartData"
+          ref="chart"
+          class="bar-chart"
+      />
+    </div>
   </div>
 </template>
 
-<style scoped>
-.chart-controls {
-  position: absolute;
-  top: 0;
-  right: 0;
+<style scoped lang="scss">
+//TODO: постоянный отступ снизу
+.chart-wrapper {
+  transition: filter .3s ease-out;
+  position: relative;
+  height: 36vw;
+  max-height: 490px;
+
+  //&.is-editing {
+  //  filter: blur(4px)
+  //}
+}
+
+.bar-chart {
+  position: relative;
+  height: 100%;
+  width: 100%;
 }
 </style>

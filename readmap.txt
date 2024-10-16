@@ -1,0 +1,13 @@
+Roadmap:
+* add and edit legend for bar chart
+* grouped bars
+* interface for adding one new item
+* ability to change bars colors
+* data zoom
+
+** корелляционные зависимости между графиками
+
+* general interface update (icons, styles for base components, responsability etc)
+* typescript support
+* linting
+* theming
