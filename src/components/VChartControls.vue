@@ -3,10 +3,9 @@ import { useUserData } from '@/stores/useUserData'
 import { useAppSettings } from "@/stores/useAppSettings.ts";
 import { useRouter } from "vue-router";
 
-const emit = defineEmits(['deleteChart'])
-const props = defineProps({
+const props = defineProps<{
   id: String
-})
+}>()
 
 const store = useUserData()
 const { toggleEdit } = useAppSettings()

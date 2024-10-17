@@ -1,10 +1,17 @@
 <script setup lang="ts">
 import VSidebarItem from "./VSidebarItem.vue";
-defineProps({
-  data: Array
-})
 
-function titleToUrl(title){
+type chartTitles = {
+  title: string,
+  type: string,
+  url: string
+}
+
+defineProps<{
+  data: Array<chartTitles>
+}>()
+
+function titleToUrl(title: string){
   return title.split(" ").join('-').toLowerCase()
 }
 </script>

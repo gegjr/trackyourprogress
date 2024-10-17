@@ -1,9 +1,9 @@
 <script setup lang="ts">
-defineProps({
-  title: String,
-  to: String,
-  type: String
-})
+defineProps<{
+  title: string,
+  to: string,
+  type: string
+}>()
 
 </script>
 

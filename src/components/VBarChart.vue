@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import VChartControls from "@/components/VChartControls.vue";
-
-import {watch, useTemplateRef, computed, shallowRef} from 'vue'
+import type { chartDataType } from '@/interfaces/index.ts'
+import {watch, useTemplateRef, computed} from 'vue'
 import { useAppSettings } from "@/stores/useAppSettings.ts";
 import { Bar } from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
@@ -9,17 +8,22 @@ import zoomPlugin from 'chartjs-plugin-zoom';
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, zoomPlugin)
 
-const emit = defineEmits(['click']) // todo: typing
-const props = defineProps(['data', 'id']) // todo: validation
+const emit = defineEmits<{
+  (e: 'click', value: string): void
+}>()
+const props = defineProps<{
+  data: chartDataType
+}>()
 
 const { settings } = useAppSettings()
 const isEditing = computed(() => settings.isEditState)
-const chartRef = useTemplateRef('chart')
-// const chartData = computed(() => props.data)
-const chartData = computed(() => JSON.parse(JSON.stringify(props.data)))
+const chartRef = useTemplateRef<typeof Bar>('chart')
+const chartData = computed<chartDataType>(() => JSON.parse(JSON.stringify(props.data)))
 
 watch(chartData, () => {
-  chartRef.value.chart.update();
+  if (chartRef.value){
+    chartRef.value.chart.update();
+  }
 })
 
 
@@ -44,20 +48,21 @@ const chartOptions = {
     }
   },
   responsive: true,
-  onClick: (e) => {
+  onClick: (e: Event) => {
     handleChartClick(e)
   },
 }
 
-function handleChartClick(e) {
-  const chart = chartRef.value.chart
-  const points = chart.getElementsAtEventForMode(e, 'nearest', { intersect: true }, true);
-  if (points.length) {
-    const firstPoint = points[0];
-    const label = chart.data.labels[firstPoint.index];
-    const value = chart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index];
+function handleChartClick(e: Event) {
+  if (chartRef.value) {
+    const chart = chartRef.value.chart
+    const points = chart.getElementsAtEventForMode(e, 'nearest', { intersect: true }, true);
+    if (points.length) {
+      const firstPoint = points[0];
+      const value = chart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index];
 
-    emit('click', value.comment)
+      emit('click', value.comment)
+    }
   }
 }
 </script>
@@ -67,8 +72,8 @@ function handleChartClick(e) {
     <div class="chart-wrapper" :class="{'is-editing': isEditing}">
       <Bar
           id="my-chart-id"
-          :options="chartOptions"
-          :data="chartData"
+          :options="chartOptions as any"
+          :data="chartData as any"
           ref="chart"
           class="bar-chart"
       />

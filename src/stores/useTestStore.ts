@@ -1,5 +1,4 @@
 import {defineStore} from 'pinia'
-import {computed, ref} from "vue";
 // TODO: WHF is the composables
 import {useStorage} from '@vueuse/core'
 
@@ -29,7 +28,7 @@ export const useTestStore = defineStore('testStore', () => {
         ])
     }
 
-    function deleteDataFromChart(index){
+    function deleteDataFromChart(index: number){
         const chartObj = userData.charts.value[0]
         chartObj.data.labels.splice(index, 1)
         for (let i = 0; i < chartObj.data.datasets.length; i++) {

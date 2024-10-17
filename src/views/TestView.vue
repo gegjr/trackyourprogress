@@ -1,15 +1,13 @@
 <script setup lang="ts">
 import { Bar } from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
-import {computed, useTemplateRef} from "vue";
+import {computed} from "vue";
 import {useTestStore} from "@/stores/useTestStore.ts";
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
 const store = useTestStore()
 const { userData, deleteDataFromChart } = store
-console.log('userData:',userData )
 
-const chartRef = useTemplateRef('chart')
 const chartData = computed(() => JSON.parse(JSON.stringify(userData.charts[0].data)))
 
 
