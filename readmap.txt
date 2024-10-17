@@ -1,15 +1,18 @@
 Roadmap:
 * add and edit legend for bar chart (2/10)
-* grouped bars (solved -> ?)
 * interface for adding one new item (8/10)
-* ability to change bars colors (solved!)
-* data zoom (5/10)
 * point( and some other) chart (7/10)
-* deploy + mobile testing (8/10)
+* draggable edit (10/10 ^_^)
+* size of the bundle = ?
+* https://www.chartjs.org/chartjs-plugin-annotation/latest/ for annotations = cool
+(solved -> ?) * grouped bars
+(solved!) * ability to change bars colors
+(solved!) * data zoom (5/10)
+(solved!) * deploy + mobile testing (8/10)
 
 ** корелляционные зависимости между графиками
 
 * general interface update (icons, styles for base components, responsability etc)
-* typescript support
+(solved basic approach!) * typescript support
 * linting
 * theming
