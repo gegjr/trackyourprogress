@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import VButton from '@/components/VButton.vue'
+import VButton from '@/components/ui/VButton.vue'
 
 import { createPinia } from 'pinia'
 const pinia = createPinia()

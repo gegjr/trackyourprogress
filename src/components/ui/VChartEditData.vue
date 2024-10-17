@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useUserData } from "@/stores/useUserData.ts";
 import { useRoute } from "vue-router";
-import {chartDataType} from '@/interfaces/index.ts'
+import {chartDataType} from '@/interfaces'
 
 const { getChartByUrl } = useUserData()
 const emit = defineEmits(['add-new-bar', 'delete-data', 'add-data'])

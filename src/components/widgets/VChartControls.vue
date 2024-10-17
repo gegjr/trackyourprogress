@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useUserData } from '@/stores/useUserData'
+import { useUserData } from '@/stores/useUserData.ts'
 import { useAppSettings } from "@/stores/useAppSettings.ts";
 import { useRouter } from "vue-router";
 

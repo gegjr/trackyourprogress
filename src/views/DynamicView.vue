@@ -7,7 +7,7 @@ import {computed} from "vue";
 import VBarChart from "@/components/VBarChart.vue";
 import VPointChart from "@/components/VPointChart.vue";
 import VScatterChart from "@/components/VScatterChart.vue";
-import VChartControls from "@/components/VChartControls.vue";
+import VChartControls from "@/components/widgets/VChartControls.vue";
 
 const route = useRoute()
 const store = useUserData()

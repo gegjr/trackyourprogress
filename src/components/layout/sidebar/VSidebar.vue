@@ -5,8 +5,8 @@ import { useUserData } from "@/stores/useUserData.ts";
 import { useAppSettings } from "@/stores/useAppSettings.ts";
 import { storeToRefs } from "pinia";
 import {computed} from "vue";
-import VChartEditData from "@/components/VChartEditData.vue";
-import VChartEditStructure from "@/components/VChartEditStructure.vue";
+import VChartEditData from "@/components/ui/VChartEditData.vue";
+import VChartEditStructure from "@/components/widgets/VChartEditStructure.vue";
 
 const router = useRouter()
 const store = useUserData()

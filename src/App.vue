@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import VSidebar from "./components/VSidebar.vue";
+import VSidebar from "./components/layout/sidebar/VSidebar.vue";
 // TODO: how does ref() WORK ??!!!?!?!?!?!?!
 
 
