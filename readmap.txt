@@ -5,6 +5,7 @@ Roadmap:
 * draggable edit (10/10 ^_^)
 * size of the bundle = ?
 * https://www.chartjs.org/chartjs-plugin-annotation/latest/ for annotations = cool
+* markers (custom?) for bars...
 (solved -> ?) * grouped bars
 (solved!) * ability to change bars colors
 (solved!) * data zoom (5/10)

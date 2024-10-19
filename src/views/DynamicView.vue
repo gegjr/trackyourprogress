@@ -8,6 +8,7 @@ import VBarChart from "@/components/VBarChart.vue";
 import VPointChart from "@/components/VPointChart.vue";
 import VScatterChart from "@/components/VScatterChart.vue";
 import VChartControls from "@/components/widgets/VChartControls.vue";
+import VAddSingleRecord from "@/components/widgets/VAddSingleRecord.vue";
 
 const route = useRoute()
 const store = useUserData()
@@ -29,27 +30,35 @@ const id = computed(() => chartObj.id)
 </script>
 
 <template>
-  <h1>{{ chartTitle }}</h1>
-  <component
-      :key="id"
-      :is="currentComponent"
-      :data="chartData"
-      :id="id"
-  ></component>
   <VChartControls
       class="chart-controls"
       :id="id"
   />
+  <div class="chart-content">
+    <h1>{{ chartTitle }}</h1>
+    <component
+        :key="id"
+        :is="currentComponent"
+        :data="chartData"
+        :id="id"
+    ></component>
+    <VAddSingleRecord />
+  </div>
 </template>
 
 <style scoped lang="scss">
+  .chart-content {
+    padding: 40px;
+  }
+
   h1 {
     margin-bottom: 20px;
   }
 
   .chart-controls {
-    position: absolute;
+    position: sticky;
+    display: inline-flex;
+    margin-left: auto;
     top: 0;
-    right: 0;
   }
 </style>
