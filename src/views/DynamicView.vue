@@ -14,19 +14,20 @@ const route = useRoute()
 const store = useUserData()
 const { getChartByUrl } = store
 
-const url = computed(() => route.params.url).value as string
+// const url = computed(() => route.params.url).value as string
+const url = computed(() => route.params.url)
 // TODO: why computed need .value?
-const chartObj = computed(() => getChartByUrl(url)).value!
+const chartObj = computed(() => getChartByUrl(url.value))
 
 const typeToComponent = {
   'bar': VBarChart,
   'point': VPointChart,
   'radar': VScatterChart
 }
-const currentComponent = computed(() => typeToComponent[chartObj.type as keyof typeof typeToComponent])
-const chartData = computed(() =>  chartObj.data)
-const chartTitle = computed(() => chartObj.title)
-const id = computed(() => chartObj.id)
+const currentComponent = computed(() => typeToComponent[chartObj.value.type as keyof typeof typeToComponent])
+const chartData = computed(() =>  chartObj.value.data)
+const chartTitle = computed(() => chartObj.value.title)
+const id = computed(() => chartObj.value.id)
 </script>
 
 <template>

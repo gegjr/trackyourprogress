@@ -4,9 +4,10 @@ import {watch, useTemplateRef, computed} from 'vue'
 import { useAppSettings } from "@/stores/useAppSettings.ts";
 import { Bar } from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
+import annotationPlugin from 'chartjs-plugin-annotation';
 import zoomPlugin from 'chartjs-plugin-zoom';
 
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, zoomPlugin)
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, zoomPlugin, annotationPlugin)
 
 const emit = defineEmits<{
   (e: 'click', value: string): void
@@ -26,6 +27,30 @@ watch(chartData, () => {
   }
 })
 
+const annotation1 = {
+  type: 'box',
+  xMin: 2.5,
+  xMax: 3.5,
+  yMin: 0,
+  yMax: 70,
+  backgroundColor: 'rgba(250, 250, 0, 0.4)',
+  borderColor: 'rgba(0, 150, 0, 0.2)',
+  drawTime: 'beforeDatasetsDraw',
+  borderWidth: 0,
+  borderRadius: 0,
+  enter: function({element}) {
+    console.log(element)
+    element.options.backgroundColor = 'red'
+    return true;
+  },
+  click: function({element}) {
+    console.log(element.label.options.content + ' clicked');
+  },
+  leave: function({element}) {
+    element.options.backgroundColor = 'transparent'
+    return true;
+  },
+};
 
 const chartOptions = {
   plugins: {
@@ -44,6 +69,11 @@ const chartOptions = {
           enabled: true
         },
         mode: 'x',
+      }
+    },
+    annotation: {
+      annotations: {
+        annotation1
       }
     }
   },
