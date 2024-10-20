@@ -29,6 +29,9 @@ function handleTest(){
 
 <template>
   <h1>testing area</h1>
+  <div class="test" v-for="(i, index) in 7">
+    {{ i }} {{ index }}
+  </div>
   <VButton @click="handleTest">Test</VButton>
   <Bar
       :options="chartOptions"
