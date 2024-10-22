@@ -52,7 +52,6 @@ export const useUserData = defineStore('userData', () => {
         if(chartObj){
             chartObj.data.labels.push(obj.label)
             for (let i = 0; i < chartObj.data.datasets.length; i++) {
-                // chartObj.data.datasets[i].data[chartObj.data.labels.length - 1] = obj.data
                 chartObj.data.datasets[i].data.push(obj.data)
             }
         }

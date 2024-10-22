@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { useUserData } from "@/stores/useUserData.ts";
 import { useRoute } from "vue-router";
-import {chartDataType} from '@/interfaces'
+import { chartDataType } from '@/interfaces/index.ts'
 
-const { getChartByUrl } = useUserData()
+const { getChartByUrl, addChartData, deleteChartData } = useUserData()
 const emit = defineEmits(['add-new-bar', 'delete-data', 'add-data'])
 
 // TODO: получать объект из стора
@@ -21,11 +21,17 @@ function handleAddSingleBar(index: number){
 }
 
 function handleDeleteData(index: number){
-  emit('delete-data', index)
+  deleteChartData(chartObj.id, index)
 }
 
 function handleAddData(index: number){
-  emit('add-data', index)
+  // emit('add-data', index)
+  const blankObj = {
+    backgroundColor: 'lightgrey',
+    data: '',
+    label: ''
+  }
+  addChartData(blankObj, chartObj.id)
 }
 </script>
 
@@ -37,7 +43,7 @@ function handleAddData(index: number){
         <div class="grid-table" v-if="editableObj">
         <!-- TODO: использовать болванки базовых компонентов -->
           <div class="grid-table__row"
-               v-for="(i) in editableObj.labels.length"
+               v-for="(item, i) in editableObj.labels.length"
                :key="editableObj.labels[i] + editableObj.datasets[0].label"
           >
             <div class="grid-table__column">{{ i }}.</div>
