@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { Marker } from "@/interfaces/chart-types.ts";
-import {computed} from "vue";
+import {computed, onBeforeMount, onMounted, watch, watchEffect} from "vue";
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   name: string,
   value: number,
   barHeight: number,
@@ -10,8 +10,10 @@ const props = defineProps<{
   barMaxHeight: number,
   x: number,
   y: number,
-  markers: Marker[]
-}>()
+  markers?: Marker[]
+}>(),{
+  barHeight: 0
+})
 
 const translateMarker = computed(() => {
   if (!props.markers) return 0
@@ -37,7 +39,7 @@ const translateMarker = computed(() => {
         :y="0"
         :width="barWidth"
         :height="barMaxHeight"
-        opacity="0.2"
+        opacity="0"
         fill="green"
         rx="1"
     />
@@ -55,7 +57,7 @@ const translateMarker = computed(() => {
 </template>
 
 <style scoped lang="scss">
-.rect {
+.rect, .rect-bg {
   transition: all .3s;
 }
 

@@ -48,6 +48,7 @@ function handleChange3(){
   <button @click="handleChange">Change data!</button>
   <button @click="handleChange2">Change data!2</button>
   <button @click="handleChange3">Push data!</button>
+  <input v-model="data[0].value"/>
   <VBarChartD3
       :chart-data="data"
       :chart-width="600"

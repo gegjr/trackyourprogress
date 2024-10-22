@@ -64,11 +64,6 @@ onMounted(() => {
 </script>
 
 <template>
-<!--  <div class="chart">-->
-<!--    Scale X: {{ scaleX('a')}}-->
-<!--    Scale Y: {{ scaleY(0)}}-->
-<!--  </div>-->
-
   <svg :width="cChartWidth + margin.left + margin.right" :height="cChartHeight + margin.top + margin.bottom">
     <VChartGrid
         :ticks="chartData.length"
@@ -79,18 +74,20 @@ onMounted(() => {
         :transform="`translate(${margin.left}, ${margin.top})`"
     />
     <g :transform="`translate(${margin.left}, ${margin.top})`">
-      <VBarChartItemD3
-          v-for="(item, i) in chartData"
-          :key="i"
-          :name="item.name"
-          :value="item.value"
-          :bar-height="cChartHeight - scaleY(item.value)"
-          :bar-width="scaleX.bandwidth()"
-          :bar-max-height="cChartHeight - scaleY(maxVal)"
-          :x="scaleX(item.name)"
-          :y="scaleY(item.value)"
-          :markers="item.markers"
-      />
+      <TransitionGroup name="list" tag="g">
+        <VBarChartItemD3
+            v-for="(item, i) in chartData"
+            :key="i"
+            :name="item.name"
+            :value="item.value"
+            :bar-height="cChartHeight - scaleY(item.value)"
+            :bar-width="scaleX.bandwidth()"
+            :bar-max-height="cChartHeight - scaleY(maxVal)"
+            :x="scaleX(item.name)"
+            :y="scaleY(item.value)"
+            :markers="item.markers"
+        />
+      </TransitionGroup>
     </g>
     <g class="axis" :transform="`translate(${margin.left}, ${margin.top})`">
       <g ref="axis-left"></g>
@@ -100,5 +97,13 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
-
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s ease;
+}
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
 </style>

@@ -5,7 +5,7 @@ import {onMounted, useTemplateRef, watchEffect} from "vue";
 
 const props = defineProps<{
   width: number,
-  transition: Function,
+  transition: Object,
   xScale: Function,
   yScale: Function,
   ticks: number
