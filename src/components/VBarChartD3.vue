@@ -19,6 +19,9 @@ const props = defineProps<{
   margin: barMargin
 }>()
 
+const cChartWidth = computed(() => props.chartWidth - props.margin.left - props.margin.right)
+const cChartHeight = computed(() => props.chartHeight - props.margin.top - props.margin.bottom)
+
 // chart data calculations
 const maxVal = computed(() => {
   return max(props.chartData.map((d) => d.value))
@@ -27,12 +30,8 @@ const maxVal = computed(() => {
 const scaleY = computed(() => {
   return scaleLinear()
       .domain([0, maxVal.value])
-      .range([props.chartHeight - props.margin.bottom, props.margin.top])
+      .range([cChartHeight.value, 0])
 })
-console.log('------')
-console.log(scaleY.value(0))
-console.log(scaleY.value(10))
-console.log('------')
 
 const group = computed(() => {
   return props.chartData.map((d) => d.name)
@@ -40,7 +39,7 @@ const group = computed(() => {
 const scaleX = computed(() => {
   return scaleBand()
       .domain(group.value)
-      .range([props.margin.left, props.chartWidth - props.margin.right])
+      .range([0, cChartWidth.value])
       .padding(.2)
 })
 
@@ -65,36 +64,37 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="chart">
-    Scale X: {{ scaleX('a')}}
-    Scale Y: {{ scaleY(0)}}
-  </div>
-  <svg :width="chartWidth" :height="chartHeight">
+<!--  <div class="chart">-->
+<!--    Scale X: {{ scaleX('a')}}-->
+<!--    Scale Y: {{ scaleY(0)}}-->
+<!--  </div>-->
+
+  <svg :width="cChartWidth + margin.left + margin.right" :height="cChartHeight + margin.top + margin.bottom">
     <VChartGrid
         :ticks="chartData.length"
-        :width="chartWidth"
+        :width="cChartWidth"
         :x-scale="scaleX"
         :y-scale="scaleY"
         :transition="d3Transition()"
-        :transform="`translate(${margin.left}, 0)`"
+        :transform="`translate(${margin.left}, ${margin.top})`"
     />
-    <g>
+    <g :transform="`translate(${margin.left}, ${margin.top})`">
       <VBarChartItemD3
           v-for="(item, i) in chartData"
           :key="i"
           :name="item.name"
           :value="item.value"
-          :bar-height="chartHeight - scaleY(item.value) - margin.bottom"
+          :bar-height="cChartHeight - scaleY(item.value)"
           :bar-width="scaleX.bandwidth()"
-          :bar-max-height="chartHeight - scaleY(maxVal)"
+          :bar-max-height="cChartHeight - scaleY(maxVal)"
           :x="scaleX(item.name)"
           :y="scaleY(item.value)"
           :markers="item.markers"
       />
     </g>
-    <g class="axis">
-      <g ref="axis-left" :transform="`translate(${margin.left}, 0)`"></g>
-      <g ref="axis-bottom" :transform="`translate(0, ${chartHeight - margin.bottom})`"></g>
+    <g class="axis" :transform="`translate(${margin.left}, ${margin.top})`">
+      <g ref="axis-left"></g>
+      <g ref="axis-bottom" :transform="`translate(0, ${cChartHeight})`"></g>
     </g>
   </svg>
 </template>

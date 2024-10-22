@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import VBarChartD3 from "@/components/VBarChartD3.vue";
 import {barMargin, chartDataType} from "@/interfaces/chart-types.ts";
-import {ref} from "vue";
+import {computed, ref} from "vue";
 
 const data = ref<chartDataType[]>([
   {name:'a', value: 10},
@@ -14,10 +14,11 @@ const data = ref<chartDataType[]>([
 
 const margin = ref<barMargin>({
   top: 10,
-  left: 30,
   right: 10,
-  bottom: 30
+  bottom: 30,
+  left: 30,
 })
+
 
 function handleChange(){
   data.value = [
@@ -49,8 +50,8 @@ function handleChange3(){
   <button @click="handleChange3">Push data!</button>
   <VBarChartD3
       :chart-data="data"
-      :chart-width="500"
-      :chart-height="300"
+      :chart-width="600"
+      :chart-height="400"
       :margin="margin"
   />
 </template>
