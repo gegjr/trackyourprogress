@@ -1,40 +1,57 @@
 <script setup lang="ts">
-import { Bar } from 'vue-chartjs'
-import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
-import {computed} from "vue";
-import {useTestStore} from "@/stores/useTestStore.ts";
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
+import VBarChartD3 from "@/components/VBarChartD3.vue";
+import {barMargin, chartDataType} from "@/interfaces/chart-types.ts";
+import {ref} from "vue";
 
-const store = useTestStore()
-const { userData, deleteDataFromChart } = store
+const data = ref<chartDataType[]>([
+  {name:'a', value: 10},
+  {name:'b', value: 5, markers: [{fill: 'red'}, {fill: 'blue'}]},
+  {name:'c', value: 1},
+  {name:'d', value: 7, markers: [{fill: 'grey'}]},
+  {name:'e', value: 6, markers: [{fill: 'red'}, {fill: 'blue'}, {fill: 'green'}]},
+  {name:'f', value: 5},
+])
 
-const chartData = computed(() => JSON.parse(JSON.stringify(userData.charts[0].data)))
+const margin = ref<barMargin>({
+  top: 10,
+  left: 30,
+  right: 10,
+  bottom: 30
+})
 
-
-const chartOptions = {
-  plugins: {
-    legend: {
-      display: true,
-      labels: {
-        color: 'rgb(255, 99, 132)'
-      },
-    }
-  },
-  responsive: true,
+function handleChange(){
+  data.value = [
+    {name:'a', value: 10},
+    {name:'b', value: 9},
+    {name:'c', value: 8},
+    {name:'d', value: 7},
+    {name:'e', value: 6},
+    {name:'f', value: 5},
+  ]
 }
-function handleTest(){
-  deleteDataFromChart(0)
+function handleChange2(){
+  data.value = [
+    {name:'a', value: 4},
+    {name:'b', value: 6},
+    {name:'c', value: 1},
+  ]
+}
+
+function handleChange3(){
+  data.value.push({name:'new', value: 4})
 }
 </script>
 
 <template>
   <h1>testing area</h1>
-  <VButton @click="handleTest">Test</VButton>
-  <Bar
-      :options="chartOptions"
-      :data="chartData"
-      ref="chart"
-      class="bar-chart"
+  <button @click="handleChange">Change data!</button>
+  <button @click="handleChange2">Change data!2</button>
+  <button @click="handleChange3">Push data!</button>
+  <VBarChartD3
+      :chart-data="data"
+      :chart-width="500"
+      :chart-height="300"
+      :margin="margin"
   />
 </template>
 
